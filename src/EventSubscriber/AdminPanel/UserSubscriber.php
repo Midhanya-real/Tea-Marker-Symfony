@@ -4,10 +4,11 @@ namespace App\EventSubscriber\AdminPanel;
 
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserCreateSubscriber implements EventSubscriberInterface
+class UserSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private UserPasswordHasherInterface $hasher
@@ -15,7 +16,7 @@ class UserCreateSubscriber implements EventSubscriberInterface
     {
     }
 
-    public function onBeforeEntityPersistedEvent(BeforeEntityPersistedEvent $event): void
+    public function onBeforeEntityPersistedEvent(BeforeEntityPersistedEvent|BeforeEntityUpdatedEvent $event): void
     {
         $entity = $event->getEntityInstance();
 
@@ -31,6 +32,7 @@ class UserCreateSubscriber implements EventSubscriberInterface
     {
         return [
             BeforeEntityPersistedEvent::class => 'onBeforeEntityPersistedEvent',
+            BeforeEntityUpdatedEvent::class => 'onBeforeEntityPersistedEvent',
         ];
     }
 }
