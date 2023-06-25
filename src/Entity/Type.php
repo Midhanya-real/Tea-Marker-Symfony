@@ -19,6 +19,11 @@ class Type
     #[ORM\OneToOne(mappedBy: 'type', cascade: ['persist', 'remove'])]
     private ?Product $product = null;
 
+    public function __toString(): string
+    {
+        return (string) $this->name;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
