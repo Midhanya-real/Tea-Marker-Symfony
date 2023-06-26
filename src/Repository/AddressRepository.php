@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Address;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +39,27 @@ class AddressRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findByUserField(?User $user): array
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.user_id = :u')
+            ->setParameter('u', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findByOneUserField(?User $user): ?Address
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.user_id = :u')
+            ->setParameter('u', $user)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 //    /**
