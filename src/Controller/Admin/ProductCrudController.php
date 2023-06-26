@@ -23,7 +23,7 @@ class ProductCrudController extends AbstractCrudController
         return [
             TextField::new('name'),
             NumberField::new('weight')->setNumDecimals(2),
-            MoneyField::new('price')->setCurrency('RUB'),
+            NumberField::new('price')->setNumDecimals(2),
             AssociationField::new('category'),
             AssociationField::new('type'),
             AssociationField::new('brand'),
