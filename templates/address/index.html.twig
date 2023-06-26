@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Address index{% endblock %}
+{% block title %}Addresses{% endblock %}
 
 {% block body %}
-    <h1>Address index</h1>
+    <h1>Addresses</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Country</th>
                 <th>City</th>
                 <th>House</th>
@@ -20,7 +19,6 @@
         <tbody>
         {% for address in addresses %}
             <tr>
-                <td>{{ address.id }}</td>
                 <td>{{ address.country }}</td>
                 <td>{{ address.city }}</td>
                 <td>{{ address.house }}</td>

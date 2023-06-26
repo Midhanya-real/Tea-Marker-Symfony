@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }}{% endblock %} {# Сделать тут слаг #}
+
+{% block body %}
+    <h1>Order</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Product</th>
+            <td>{{ product.name }}</td>
+        </tr>
+        <tr>
+            <th>Brand</th>
+            <td>{{ product.brand }}</td>
+        </tr>
+
+        <tr>
+            <th>Country</th>
+            <td>{{ product.country }}</td>
+        </tr>
+        <tr>
+            <th>Weight</th>
+            <td>{{ product.weight }}</td>
+        </tr>
+
+        <tr>
+            <th>Type</th>
+            <td>{{ product.type }}</td>
+        </tr>
+
+        <tr>
+            <th>Price</th>
+            <td>{{ product.price }}</td>
+        </tr>
+    </table>
+
+{% endblock %}
+

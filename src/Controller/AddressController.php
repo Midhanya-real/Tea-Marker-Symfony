@@ -17,7 +17,7 @@ class AddressController extends AbstractController
     public function index(AddressRepository $addressRepository): Response
     {
         return $this->render('address/index.html.twig', [
-            'addresses' => $addressRepository->findAll(),
+            'addresses' => $addressRepository->findByUserField($this->getUser()),
         ]);
     }
 
@@ -43,6 +43,10 @@ class AddressController extends AbstractController
     #[Route('/{id}', name: 'app_address_show', methods: ['GET'])]
     public function show(Address $address): Response
     {
+        if ($address->getUserId() !== $this->getUser()) {
+            return $this->redirectToRoute('app_address_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         return $this->render('address/show.html.twig', [
             'address' => $address,
         ]);
@@ -51,6 +55,10 @@ class AddressController extends AbstractController
     #[Route('/{id}/edit', name: 'app_address_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Address $address, AddressRepository $addressRepository): Response
     {
+        if ($address->getUserId() !== $this->getUser()) {
+            return $this->redirectToRoute('app_address_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         $form = $this->createForm(AddressType::class, $address);
         $form->handleRequest($request);
 
@@ -69,7 +77,11 @@ class AddressController extends AbstractController
     #[Route('/{id}', name: 'app_address_delete', methods: ['POST'])]
     public function delete(Request $request, Address $address, AddressRepository $addressRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$address->getId(), $request->request->get('_token'))) {
+        if ($address->getUserId() !== $this->getUser()) {
+            return $this->redirectToRoute('app_address_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        if ($this->isCsrfTokenValid('delete' . $address->getId(), $request->request->get('_token'))) {
             $addressRepository->remove($address, true);
         }
 
