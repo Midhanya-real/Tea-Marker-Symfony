@@ -1,10 +1,21 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Order{% endblock %}
+
 {% block body %}
+    <h1>Order</h1>
 
-{% endblock %}
-
-{% block title %}
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Product</th>
+            <td>{{ order.product }}</td>
+        </tr>
+        <tr>
+            <th>Count</th>
+            <td>{{ order.count }}</td>
+        </tr>
+    </table>
 
 {% endblock %}
 
