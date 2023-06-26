@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Order;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,15 @@ class OrderRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findByUserField(?User $user): array
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.user_id = :u')
+            ->setParameter('u', $user)
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**
