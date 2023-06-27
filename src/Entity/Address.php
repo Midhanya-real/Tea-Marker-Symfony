@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AddressRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
 class Address
@@ -15,22 +16,32 @@ class Address
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Country()]
     private ?string $country = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     private ?string $city = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Assert\NotBlank()]
+    #[Assert\Positive()]
     private ?int $house = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Assert\NotBlank()]
+    #[Assert\Positive()]
     private ?int $apartment = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 6)]
     private ?int $post_code = null;
 
     #[ORM\ManyToOne(inversedBy: 'addresses')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\Type(User::class)]
     private ?User $user_id = null;
 
     public function getId(): ?int
