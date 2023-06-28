@@ -36,7 +36,7 @@ class Product
 
     #[ORM\OneToOne(inversedBy: 'product', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Assert\Type(Types::class)]
+    #[Assert\Type(Type::class)]
     private ?Type $type = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
