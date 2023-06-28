@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\PaymentBuilder;
+namespace App\Services\PaymentService;
 
 use YooKassa\Client;
 use YooKassa\Common\Exceptions\ApiConnectionException;
@@ -18,17 +18,17 @@ use YooKassa\Model\Payment\PaymentInterface;
 use YooKassa\Request\Payments\CancelResponse;
 use YooKassa\Request\Payments\CreateCaptureResponse;
 use YooKassa\Request\Payments\CreatePaymentResponse;
-use YooKassa\Request\Payments\PaymentResponse;
 use YooKassa\Request\Payments\PaymentsResponse;
 
 class YookassaAPI
 {
     public function __construct(
-        private readonly array $config,
         private readonly Client $client,
+        private readonly string $shopId,
+        private readonly string $secret,
     )
     {
-        $this->client->setAuth($this->config['market_id'], $this->config['secret_key']);
+        $this->client->setAuth($shopId, $secret);
     }
 
     /**
