@@ -22,7 +22,8 @@ services:
 
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones
-App\Services\PaymentService\YookassaAPI:
-  arguments:
-    $shopId: '%env(YOOKASSA_SHOP)%'
-    $secret: '%env(YOOKASSA_SECRET)%'
+
+  App\Services\PaymentService\YookassaAPI:
+    arguments:
+      $shopId: '%env(YOOKASSA_SHOP)%'
+      $secret: '%env(YOOKASSA_SECRET)%'
