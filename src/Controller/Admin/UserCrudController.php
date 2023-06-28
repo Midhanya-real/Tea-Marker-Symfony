@@ -23,7 +23,9 @@ class UserCrudController extends AbstractCrudController
         return [
             yield EmailField::new('email'),
             yield TextField::new('password')->setFormType(PasswordType::class),
-            yield ChoiceField::new('roles')->allowMultipleChoices()->setChoices(UserRole::cases()),
+            yield ChoiceField::new('roles')
+                ->setChoices(UserRole::cases())
+                ->allowMultipleChoices(),
         ];
     }
 
