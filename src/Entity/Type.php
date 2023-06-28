@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TypeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TypeRepository::class)]
 class Type
@@ -14,14 +15,16 @@ class Type
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     private ?string $name = null;
 
     #[ORM\OneToOne(mappedBy: 'type', cascade: ['persist', 'remove'])]
+    #[Assert\Type(Product::class)]
     private ?Product $product = null;
 
     public function __toString(): string
     {
-        return (string) $this->name;
+        return (string)$this->name;
     }
 
     public function getId(): ?int

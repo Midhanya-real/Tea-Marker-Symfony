@@ -6,6 +6,7 @@ use App\Repository\CountryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
 class Country
@@ -16,6 +17,7 @@ class Country
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Country(alpha3: true)]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'country', targetEntity: Product::class, orphanRemoval: true)]
