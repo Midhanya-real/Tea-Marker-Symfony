@@ -17,7 +17,7 @@ class Country
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Country()]
+    #[Assert\Country(alpha3: true)]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'country', targetEntity: Product::class, orphanRemoval: true)]
