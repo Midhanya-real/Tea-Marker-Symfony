@@ -6,6 +6,7 @@ use App\Entity\Brand;
 use App\Entity\Category;
 use App\Entity\Country;
 use App\Entity\Order;
+use App\Entity\Payment;
 use App\Entity\Product;
 use App\Entity\Type;
 use App\Entity\User;
@@ -37,7 +38,11 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToRoute('Back To Market', 'fas fa-home', 'app_home');
         yield MenuItem::linkToCrud('Users', 'fas fa-list', User::class)->setPermission('ROLE_SUPER_ADMIN');
-        yield MenuItem::linkToCrud('Orders', 'fas fa-list', Order::class)->setPermission('ROLE_ADMIN');
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            yield MenuItem::linkToCrud('Orders', 'fas fa-list', Order::class);
+            yield MenuItem::linkToCrud('Payments', 'fas fa-list', Payment::class);
+        }
 
         if ($this->isGranted('ROLE_MODER')) {
             yield MenuItem::linkToCrud('Categories', 'fas fa-list', Category::class);

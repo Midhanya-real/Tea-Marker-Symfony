@@ -30,6 +30,11 @@ class Order
     #[Assert\Type(Product::class)]
     private ?Product $product = null;
 
+    public function __toString(): string
+    {
+        return (string)$this->id;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
