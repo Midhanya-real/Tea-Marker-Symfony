@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\config\Enums\OrderStatus;
 use App\Repository\PaymentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,9 +27,9 @@ class Payment
     #[Assert\Positive]
     private ?string $price = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(type: 'string', length: 30, enumType: OrderStatus::class)]
     #[Assert\NotBlank()]
-    private ?string $status = null;
+    private ?OrderStatus $status = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[Assert\Type(Order::class)]
@@ -68,12 +69,12 @@ class Payment
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?OrderStatus
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(OrderStatus $status): static
     {
         $this->status = $status;
 
