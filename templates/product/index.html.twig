@@ -9,17 +9,17 @@
             <th>Product</th>
             <th>Weight</th>
             <th>Price</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         {% for product in products %}
             <tr>
-                <td><a href="{{ path('app_product_show', {id: product.id}) }}">{{ product.name}}</a></td>
-                <td>{{ product.weight}}</td>
-                <td>{{ product.price}}</td>
+                <td><a href="{{ path('app_product_show', {id: product.id}) }}">{{ product.name }}</a></td>
+                <td>{{ product.weight }}</td>
+                <td>{{ product.price }}</td>
                 <td>
-                    {#                    <a href="{{ path('app_address_show', {'id': address.id}) }}">show</a>#}
-                    {#                    <a href="{{ path('app_address_edit', {'id': address.id}) }}">edit</a>#}
+                    <a href="{{ path('app_order_new', {'product': product}) }}">show</a>
                 </td>
             </tr>
         {% else %}

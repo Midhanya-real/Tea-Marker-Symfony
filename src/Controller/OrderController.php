@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\Product;
 use App\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -28,5 +30,29 @@ class OrderController extends AbstractController
         return $this->render('order/show.html.twig', [
             'order' => $order,
         ]);
+    }
+
+    #[Route('/new', name: 'app_order_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, Product $product, OrderRepository $orderRepository): Response
+    {
+        $order = new Order();
+        $order->setUserId($this->getUser());
+        $order->setProduct($product);
+
+        $form = $this->createForm($order, $orderRepository);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $orderRepository->save($order, true);
+
+            return $this->redirectToRoute('app_order_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('order/new.html.twig', [
+            'order' => $order,
+            'form' => $form,
+        ]);
+
     }
 }
