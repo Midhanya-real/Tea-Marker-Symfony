@@ -37,7 +37,9 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToRoute('Back To Market', 'fas fa-home', 'app_home');
-        yield MenuItem::linkToCrud('Users', 'fas fa-list', User::class)->setPermission('ROLE_SUPER_ADMIN');
+
+        yield MenuItem::linkToCrud('Users', 'fas fa-list', User::class)
+            ->setPermission('ROLE_SUPER_ADMIN');
 
         if ($this->isGranted('ROLE_ADMIN')) {
             yield MenuItem::linkToCrud('Orders', 'fas fa-list', Order::class);
