@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Order;
-use App\Entity\Product;
+use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +21,7 @@ class OrderController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_order_show', methods: ['GET'])]
+    #[Route('show/{id}', name: 'app_order_show', methods: ['GET'])]
     public function show(Order $order): Response
     {
         if ($order->getUserId() !== $this->getUser()) {
@@ -33,13 +33,12 @@ class OrderController extends AbstractController
     }
 
     #[Route('/new', name: 'app_order_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, Product $product, OrderRepository $orderRepository): Response
+    public function new(Request $request, OrderRepository $orderRepository): Response
     {
         $order = new Order();
         $order->setUserId($this->getUser());
-        $order->setProduct($product);
 
-        $form = $this->createForm($order, $orderRepository);
+        $form = $this->createForm(OrderType::class, $order);
 
         $form->handleRequest($request);
 

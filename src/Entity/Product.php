@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -49,9 +51,13 @@ class Product
     #[Assert\Type(Country::class)]
     private ?Country $country = null;
 
-    #[ORM\OneToOne(mappedBy: 'product', cascade: ['persist', 'remove'])]
-    #[Assert\Type(Order::class)]
-    private ?Order $order_id = null;
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Order::class, orphanRemoval: false)]
+    private Collection $orders;
+
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -147,20 +153,8 @@ class Product
         return $this;
     }
 
-    public function getOrderId(): ?Order
+    public function getOrders(): Collection
     {
-        return $this->order_id;
-    }
-
-    public function setOrderId(Order $order_id): static
-    {
-        // set the owning side of the relation if necessary
-        if ($order_id->getProduct() !== $this) {
-            $order_id->setProduct($this);
-        }
-
-        $this->order_id = $order_id;
-
-        return $this;
+        return $this->orders;
     }
 }

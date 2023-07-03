@@ -25,7 +25,7 @@ class Order
     #[Assert\Type(User::class)]
     private ?User $user_id = null;
 
-    #[ORM\OneToOne(inversedBy: 'order_id', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\Type(Product::class)]
     private ?Product $product = null;

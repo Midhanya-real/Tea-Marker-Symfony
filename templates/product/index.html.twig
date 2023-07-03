@@ -19,7 +19,7 @@
                 <td>{{ product.weight }}</td>
                 <td>{{ product.price }}</td>
                 <td>
-                    <a href="{{ path('app_order_new', {'product': product}) }}">show</a>
+                    <a href="{{ path('app_product_setformfororder', {name: product.name}) }}">Buy</a>
                 </td>
             </tr>
         {% else %}
