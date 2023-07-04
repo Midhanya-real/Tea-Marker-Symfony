@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,19 +30,8 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{name}/preOrder', name: 'app_product_setformfororder', methods: ['GET', 'POST'])]
-    public function setFormForOrder(Request $request, Product $product)
+    public function setFormForOrder(Request $request, Product $product): Response
     {
-        $form = $this->createForm(ProductType::class, $product);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            return $this->redirectToRoute('app_order_new', ['request' => $request], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('product/preOrder.html.twig', [
-            'product' => $product,
-            'form' => $form
-        ]);
+        return $this->redirectToRoute('app_order_new', ['product' => $product->getId()], Response::HTTP_SEE_OTHER);
     }
 }

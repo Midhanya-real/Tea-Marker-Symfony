@@ -41,11 +41,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Address::class, orphanRemoval: true)]
     private Collection $addresses;
 
-    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Order::class, orphanRemoval: true)]
-    private Collection $orders;
-
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
+
+    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Order::class, orphanRemoval: true)]
+    private Collection $orders;
 
     #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Payment::class, orphanRemoval: true)]
     private Collection $payments;
@@ -162,6 +162,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Order>
      */
@@ -188,18 +200,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $order->setUserId(null);
             }
         }
-
-        return $this;
-    }
-
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): static
-    {
-        $this->isVerified = $isVerified;
 
         return $this;
     }

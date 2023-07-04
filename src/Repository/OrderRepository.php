@@ -40,7 +40,7 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
-    public function findByUserField(?User $user): array
+    public function findByUserField(?User $user)
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.user_id = :u')

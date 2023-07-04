@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
@@ -16,24 +15,18 @@ class Order
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank()]
-    #[Assert\Positive]
     private ?int $count = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Assert\Type(User::class)]
     private ?User $user_id = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Assert\Type(Product::class)]
-    private ?Product $product = null;
+    private ?Product $product_id = null;
 
-    public function __toString(): string
-    {
-        return (string)$this->id;
-    }
+    #[ORM\OneToOne(mappedBy: 'order_id', cascade: ['persist', 'remove'])]
+    private ?Payment $payment = null;
 
     public function getId(): ?int
     {
@@ -64,14 +57,31 @@ class Order
         return $this;
     }
 
-    public function getProduct(): ?Product
+    public function getProductId(): ?Product
     {
-        return $this->product;
+        return $this->product_id;
     }
 
-    public function setProduct(Product $product): static
+    public function setProductId(?Product $product_id): static
     {
-        $this->product = $product;
+        $this->product_id = $product_id;
+
+        return $this;
+    }
+
+    public function getPayment(): ?Payment
+    {
+        return $this->payment;
+    }
+
+    public function setPayment(Payment $payment): static
+    {
+        // set the owning side of the relation if necessary
+        if ($payment->getOrderId() !== $this) {
+            $payment->setOrderId($this);
+        }
+
+        $this->payment = $payment;
 
         return $this;
     }

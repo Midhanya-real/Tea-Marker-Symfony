@@ -36,11 +36,6 @@ class Product
     #[Assert\Type(Category::class)]
     private ?Category $category = null;
 
-    #[ORM\OneToOne(inversedBy: 'product', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Assert\Type(Type::class)]
-    private ?Type $type = null;
-
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\Type(Brand::class)]
@@ -51,7 +46,11 @@ class Product
     #[Assert\Type(Country::class)]
     private ?Country $country = null;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Order::class, orphanRemoval: false)]
+    #[ORM\ManyToOne(inversedBy: 'product_id')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Type $type = null;
+
+    #[ORM\OneToMany(mappedBy: 'product_id', targetEntity: Order::class, orphanRemoval: true)]
     private Collection $orders;
 
     public function __construct()
@@ -117,18 +116,6 @@ class Product
         return $this;
     }
 
-    public function getType(): ?Type
-    {
-        return $this->type;
-    }
-
-    public function setType(Type $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getBrand(): ?Brand
     {
         return $this->brand;
@@ -153,8 +140,45 @@ class Product
         return $this;
     }
 
+    /**
+     * @return Collection<int, Order>
+     */
     public function getOrders(): Collection
     {
         return $this->orders;
+    }
+
+    public function addOrder(Order $order): static
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders->add($order);
+            $order->setProductId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): static
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getProductId() === $this) {
+                $order->setProductId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): static
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }

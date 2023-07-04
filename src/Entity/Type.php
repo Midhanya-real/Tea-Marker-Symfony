@@ -3,8 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\TypeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TypeRepository::class)]
 class Type
@@ -15,12 +16,15 @@ class Type
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
     private ?string $name = null;
 
-    #[ORM\OneToOne(mappedBy: 'type', cascade: ['persist', 'remove'])]
-    #[Assert\Type(Product::class)]
-    private ?Product $product = null;
+    #[ORM\OneToMany(mappedBy: 'type', targetEntity: Product::class, orphanRemoval: true)]
+    private Collection $product_id;
+
+    public function __construct()
+    {
+        $this->product_id = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -44,19 +48,32 @@ class Type
         return $this;
     }
 
-    public function getProduct(): ?Product
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProductId(): Collection
     {
-        return $this->product;
+        return $this->product_id;
     }
 
-    public function setProduct(Product $product): static
+    public function addProductId(Product $productId): static
     {
-        // set the owning side of the relation if necessary
-        if ($product->getType() !== $this) {
-            $product->setType($this);
+        if (!$this->product_id->contains($productId)) {
+            $this->product_id->add($productId);
+            $productId->setType($this);
         }
 
-        $this->product = $product;
+        return $this;
+    }
+
+    public function removeProductId(Product $productId): static
+    {
+        if ($this->product_id->removeElement($productId)) {
+            // set the owning side to null (unless already changed)
+            if ($productId->getType() === $this) {
+                $productId->setType(null);
+            }
+        }
 
         return $this;
     }

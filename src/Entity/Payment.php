@@ -2,12 +2,10 @@
 
 namespace App\Entity;
 
-use App\config\Enums\OrderStatus;
 use App\Repository\PaymentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PaymentRepository::class)]
 class Payment
@@ -18,26 +16,20 @@ class Payment
     private ?int $id = null;
 
     #[ORM\Column(type: 'uuid')]
-    #[Assert\NotBlank()]
-    #[Assert\Uuid]
     private ?Uuid $yookassa_id = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    #[Assert\NotBlank()]
-    #[Assert\Positive]
     private ?string $price = null;
 
-    #[ORM\Column(type: 'string', length: 30, enumType: OrderStatus::class)]
-    #[Assert\NotBlank()]
-    private ?OrderStatus $status = null;
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[Assert\Type(Order::class)]
+    #[ORM\OneToOne(inversedBy: 'payment', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Order $order_id = null;
 
     #[ORM\ManyToOne(inversedBy: 'payments')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Assert\Type(User::class)]
     private ?User $user_id = null;
 
     public function getId(): ?int
@@ -69,12 +61,12 @@ class Payment
         return $this;
     }
 
-    public function getStatus(): ?OrderStatus
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    public function setStatus(OrderStatus $status): static
+    public function setStatus(string $status): static
     {
         $this->status = $status;
 
@@ -86,7 +78,7 @@ class Payment
         return $this->order_id;
     }
 
-    public function setOrderId(?Order $order_id): static
+    public function setOrderId(Order $order_id): static
     {
         $this->order_id = $order_id;
 

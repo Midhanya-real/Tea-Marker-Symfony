@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\Product;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,10 +35,16 @@ class OrderController extends AbstractController
     }
 
     #[Route('/new', name: 'app_order_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, OrderRepository $orderRepository): Response
+    public function new(Request $request, EntityManagerInterface $em, OrderRepository $orderRepository): Response
     {
         $order = new Order();
+
+        $product = $em
+            ->getRepository(Product::class)
+            ->findOneBy(['id' => $request->query->get('product')]);
+
         $order->setUserId($this->getUser());
+        $order->setProductId($product);
 
         $form = $this->createForm(OrderType::class, $order);
 
