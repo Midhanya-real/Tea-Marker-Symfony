@@ -27,3 +27,8 @@ services:
     arguments:
       $shopId: '%env(YOOKASSA_SHOP)%'
       $secret: '%env(YOOKASSA_SECRET)%'
+
+
+  App\Services\PaymentService\PaymentService:
+    arguments:
+      $redirectURL: '%env(YOOKASSA_REDIRECT_URL))%'

@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use App\config\Enums\OrderStatus;
 use App\Repository\PaymentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PaymentRepository::class)]
 class Payment
@@ -16,13 +18,16 @@ class Payment
     private ?int $id = null;
 
     #[ORM\Column(type: 'uuid')]
+    #[Assert\NotBlank()]
+    #[Assert\Uuid]
     private ?Uuid $yookassa_id = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    #[Assert\Positive]
     private ?string $price = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    #[ORM\Column(type: 'string', length: 255, enumType: OrderStatus::class)]
+    private ?OrderStatus $status = null;
 
     #[ORM\OneToOne(inversedBy: 'payment', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
@@ -61,12 +66,12 @@ class Payment
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?OrderStatus
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(OrderStatus $status): static
     {
         $this->status = $status;
 

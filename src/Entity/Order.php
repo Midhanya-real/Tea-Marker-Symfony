@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
@@ -15,17 +16,22 @@ class Order
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank()]
+    #[Assert\Positive]
     private ?int $count = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\Type(User::class)]
     private ?User $user_id = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\Type(Product::class)]
     private ?Product $product_id = null;
 
     #[ORM\OneToOne(mappedBy: 'order_id', cascade: ['persist', 'remove'])]
+    #[Assert\Type(Payment::class)]
     private ?Payment $payment = null;
 
     public function getId(): ?int

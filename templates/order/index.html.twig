@@ -10,16 +10,22 @@
         <tr>
             <th>Product</th>
             <th>Count</th>
+            <th>Status</th>
         </tr>
         </thead>
         <tbody>
         {% for order in orders %}
             <tr>
-                <td>{{ order.productId}}</td>
-                <td>{{ order.count}}</td>
+                <td>{{ order.productId }}</td>
+                <td>{{ order.count }}</td>
+                {% if order.payment is null %}
+                    <td>no paid</td>
+                {% else %}
+                    <td>{{ order.payment.status }}</td>
+                {% endif %}
                 <td>
-{#                    <a href="{{ path('app_address_show', {'id': address.id}) }}">show</a>#}
-{#                    <a href="{{ path('app_address_edit', {'id': address.id}) }}">edit</a>#}
+                    {#                    <a href="{{ path('app_address_show', {'id': address.id}) }}">show</a> #}
+                    {#                    <a href="{{ path('app_address_edit', {'id': address.id}) }}">edit</a> #}
                 </td>
             </tr>
         {% else %}

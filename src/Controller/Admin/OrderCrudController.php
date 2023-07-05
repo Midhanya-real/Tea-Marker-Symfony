@@ -19,7 +19,7 @@ class OrderCrudController extends AbstractCrudController
     {
         return [
             AssociationField::new('user_id', 'user'),
-            AssociationField::new('product'),
+            AssociationField::new('product_id'),
             IntegerField::new('count'),
         ];
     }

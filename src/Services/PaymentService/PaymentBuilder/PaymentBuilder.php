@@ -7,14 +7,14 @@ class PaymentBuilder implements PaymentBuilderInterface
     private array $payment;
 
     /**
-     * @param string $value
+     * @param string $price
      * @param string $currency
      * @return $this
      */
-    public function setAmount(string $value, string $currency): static
+    public function setAmount(string $price, string $currency): static
     {
         $amount = [
-            'value' => $value,
+            'value' => $price,
             'currency' => $currency,
         ];
 
@@ -57,6 +57,13 @@ class PaymentBuilder implements PaymentBuilderInterface
     public function setDescription(string $description): static
     {
         $this->payment['description'] = $description;
+
+        return $this;
+    }
+
+    public function setTestMode(bool $mode): static
+    {
+        $this->payment['test'] = $mode;
 
         return $this;
     }
