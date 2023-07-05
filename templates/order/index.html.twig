@@ -24,7 +24,7 @@
                     <td>{{ order.payment.status }}</td>
                 {% endif %}
                 <td>
-                    {#                    <a href="{{ path('app_address_show', {'id': address.id}) }}">show</a> #}
+                    <a href="{{ path('app_order_paymentredirect', {'id': order.id}) }}">pay</a>
                     {#                    <a href="{{ path('app_address_edit', {'id': address.id}) }}">edit</a> #}
                 </td>
             </tr>

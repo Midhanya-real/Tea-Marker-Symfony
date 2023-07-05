@@ -52,6 +52,7 @@ class PaymentService
         $payment = $this->paymentBuilder
             ->setAmount(price: $amount, currency: CurrencyCode::RUB)
             ->setConfirmation($this->redirectURL)
+            ->setMetaData(user: $order->getUserId(), order: $order)
             ->setTestMode(mode: true)
             ->getPayment();
 

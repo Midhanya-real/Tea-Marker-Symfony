@@ -8,6 +8,7 @@ use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,5 +62,11 @@ class OrderController extends AbstractController
             'form' => $form,
         ]);
 
+    }
+
+    #[Route('{id}/paymentRedirect', name: 'app_order_paymentredirect', methods: ['GET', 'POST'])]
+    public function paymentRedirect(Order $order): RedirectResponse
+    {
+        return $this->redirectToRoute('app_payment_new', ['order' => $order->getId()], Response::HTTP_SEE_OTHER);
     }
 }

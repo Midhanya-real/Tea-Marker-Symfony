@@ -2,6 +2,9 @@
 
 namespace App\Services\PaymentService\PaymentBuilder;
 
+use App\Entity\Order;
+use App\Entity\User;
+
 class PaymentBuilder implements PaymentBuilderInterface
 {
     private array $payment;
@@ -57,6 +60,16 @@ class PaymentBuilder implements PaymentBuilderInterface
     public function setDescription(string $description): static
     {
         $this->payment['description'] = $description;
+
+        return $this;
+    }
+
+    public function setMetaData(User $user, Order $order): static
+    {
+        $this->payment['metadata'] = [
+            'order_id' => $order->getId(),
+            'user_id' => $user->getId()
+        ];
 
         return $this;
     }
