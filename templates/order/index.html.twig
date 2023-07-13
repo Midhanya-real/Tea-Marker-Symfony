@@ -20,12 +20,15 @@
                 <td>{{ order.count }}</td>
                 {% if order.payment is null %}
                     <td>no paid</td>
+                    <td>
+                        <a href="{{ path('app_order_paymentredirect', {'id': order.id}) }}">pay</a>
+                    </td>
                 {% else %}
                     <td>{{ order.payment.status.value }}</td>
+                    <td>
+                        <a href="{{ path('app_payment_edit', {'id': order.payment.id}) }}">refund</a>
+                    </td>
                 {% endif %}
-                <td>
-                    <a href="{{ path('app_order_paymentredirect', {'id': order.id}) }}">pay</a>
-                </td>
             </tr>
         {% else %}
             <tr>

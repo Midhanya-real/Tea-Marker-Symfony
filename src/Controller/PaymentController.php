@@ -7,6 +7,7 @@ use App\Entity\Order;
 use App\Entity\Payment;
 use App\Repository\PaymentRepository;
 use App\Services\PaymentService\PaymentProcess\CreatePaymentProcess;
+use App\Services\PaymentService\PaymentProcess\RefundPaymentProcess;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,7 @@ class PaymentController extends AbstractController
 {
     public function __construct(
         private readonly CreatePaymentProcess $createPaymentProcess,
+        private readonly RefundPaymentProcess $refundPaymentProcess,
     )
     {
     }
@@ -67,5 +69,31 @@ class PaymentController extends AbstractController
         $paymentRepository->save($payment, true);
 
         return $this->redirect($createResponse->getConfirmation()->getConfirmationUrl());
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws ResponseProcessingException
+     * @throws ApiException
+     * @throws ExtensionNotFoundException
+     * @throws BadApiRequestException
+     * @throws AuthorizeException
+     * @throws InternalServerError
+     * @throws ForbiddenException
+     * @throws TooManyRequestsException
+     * @throws UnauthorizedException
+     * @throws ApiConnectionException
+     */
+    #[Route('/{id}/refund', name: 'app_payment_edit', methods: ['GET', 'POST'])]
+    public function edit(Payment $payment, PaymentRepository $paymentRepository): Response
+    {
+        $refund = $this->refundPaymentProcess->execute($payment);
+
+        if ($refund->getStatus() === 'succeeded') {
+            $payment->setStatus(OrderStatus::Refunded);
+            $paymentRepository->save($payment, true);
+        }
+
+        return $this->redirectToRoute('app_order_index');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Services\PaymentService\PaymentProcess;
 
-use App\Entity\Order;
+use App\Entity\Payment;
 use App\Services\PaymentService\PaymentService;
 use YooKassa\Common\Exceptions\ApiConnectionException;
 use YooKassa\Common\Exceptions\ApiException;
@@ -15,12 +15,12 @@ use YooKassa\Common\Exceptions\NotFoundException;
 use YooKassa\Common\Exceptions\ResponseProcessingException;
 use YooKassa\Common\Exceptions\TooManyRequestsException;
 use YooKassa\Common\Exceptions\UnauthorizedException;
-use YooKassa\Request\Payments\CreatePaymentResponse;
+use YooKassa\Request\Refunds\CreateRefundResponse;
 
-class CreatePaymentProcess
+class RefundPaymentProcess
 {
     public function __construct(
-        private readonly PaymentService $paymentService,
+        private readonly PaymentService $payment,
     )
     {
     }
@@ -38,9 +38,9 @@ class CreatePaymentProcess
      * @throws ApiConnectionException
      * @throws UnauthorizedException
      */
-    private function createPaymentResponse(Order $order): CreatePaymentResponse
+    private function createRefundResponse(Payment $payment): CreateRefundResponse
     {
-        return $this->paymentService->create($order);
+        return $this->payment->refund($payment);
     }
 
     /**
@@ -56,8 +56,8 @@ class CreatePaymentProcess
      * @throws ApiConnectionException
      * @throws UnauthorizedException
      */
-    public function execute(Order $order): CreatePaymentResponse
+    public function execute(Payment $payment): CreateRefundResponse
     {
-        return $this->createPaymentResponse($order);
+        return $this->createRefundResponse($payment);
     }
 }
