@@ -23,12 +23,15 @@ services:
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones
 
+  Yookassa_Service:
+    class: YooKassa\Client
+
   App\Services\PaymentService\YookassaAPI:
     arguments:
+      $client: '@Yookassa_Service'
       $shopId: '%env(YOOKASSA_SHOP)%'
       $secret: '%env(YOOKASSA_SECRET)%'
 
-
   App\Services\PaymentService\PaymentService:
     arguments:
-      $redirectURL: '%env(YOOKASSA_REDIRECT_URL))%'
+      $redirectURL: '%env(YOOKASSA_REDIRECT_URL)%'

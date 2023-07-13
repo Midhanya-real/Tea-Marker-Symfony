@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -30,7 +29,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{name}/preOrder', name: 'app_product_setformfororder', methods: ['GET', 'POST'])]
-    public function setFormForOrder(Request $request, Product $product): Response
+    public function setFormForOrder(Product $product): Response
     {
         return $this->redirectToRoute('app_order_new', ['product' => $product->getId()], Response::HTTP_SEE_OTHER);
     }

@@ -58,11 +58,13 @@ class PaymentController extends AbstractController
 
         $payment = new Payment();
 
-        $payment->setPrice($createResponse->price);
+        $payment->setPrice($createResponse->amount->value);
         $payment->setYookassaId(Uuid::fromString($createResponse->getId()));
         $payment->setUserId($order->getUserId());
         $payment->setOrderId($order);
         $payment->setStatus(OrderStatus::Pending);
+
+        $paymentRepository->save($payment, true);
 
         return $this->redirect($createResponse->getConfirmation()->getConfirmationUrl());
     }
