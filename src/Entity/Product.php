@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -34,11 +36,6 @@ class Product
     #[Assert\Type(Category::class)]
     private ?Category $category = null;
 
-    #[ORM\OneToOne(inversedBy: 'product', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Assert\Type(Type::class)]
-    private ?Type $type = null;
-
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\Type(Brand::class)]
@@ -49,9 +46,17 @@ class Product
     #[Assert\Type(Country::class)]
     private ?Country $country = null;
 
-    #[ORM\OneToOne(mappedBy: 'product', cascade: ['persist', 'remove'])]
-    #[Assert\Type(Order::class)]
-    private ?Order $order_id = null;
+    #[ORM\ManyToOne(inversedBy: 'product_id')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Type $type = null;
+
+    #[ORM\OneToMany(mappedBy: 'product_id', targetEntity: Order::class, orphanRemoval: true)]
+    private Collection $orders;
+
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -111,18 +116,6 @@ class Product
         return $this;
     }
 
-    public function getType(): ?Type
-    {
-        return $this->type;
-    }
-
-    public function setType(Type $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getBrand(): ?Brand
     {
         return $this->brand;
@@ -147,19 +140,44 @@ class Product
         return $this;
     }
 
-    public function getOrderId(): ?Order
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getOrders(): Collection
     {
-        return $this->order_id;
+        return $this->orders;
     }
 
-    public function setOrderId(Order $order_id): static
+    public function addOrder(Order $order): static
     {
-        // set the owning side of the relation if necessary
-        if ($order_id->getProduct() !== $this) {
-            $order_id->setProduct($this);
+        if (!$this->orders->contains($order)) {
+            $this->orders->add($order);
+            $order->setProductId($this);
         }
 
-        $this->order_id = $order_id;
+        return $this;
+    }
+
+    public function removeOrder(Order $order): static
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getProductId() === $this) {
+                $order->setProductId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

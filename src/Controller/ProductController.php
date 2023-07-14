@@ -14,6 +14,7 @@ class ProductController extends AbstractController
     #[Route('/', name: 'app_product_index', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {
+
         return $this->render('product/index.html.twig', [
             'products' => $productRepository->findAll(),
         ]);
@@ -25,5 +26,11 @@ class ProductController extends AbstractController
         return $this->render('product/show.html.twig', [
             'product' => $product,
         ]);
+    }
+
+    #[Route('/{name}/preOrder', name: 'app_product_setformfororder', methods: ['GET', 'POST'])]
+    public function setFormForOrder(Product $product): Response
+    {
+        return $this->redirectToRoute('app_order_new', ['product' => $product->getId()], Response::HTTP_SEE_OTHER);
     }
 }
