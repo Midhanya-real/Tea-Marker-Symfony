@@ -3,10 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Order;
-use App\Entity\Product;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Services\EntityBuilderService\EntityBuilderService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/order')]
 class OrderController extends AbstractController
 {
+    public function __construct(
+        private readonly EntityBuilderService $entityBuilder,
+    )
+    {
+    }
+
     #[Route('/', name: 'app_order_index', methods: ['GET'])]
     public function index(OrderRepository $orderRepository): Response
     {
@@ -36,16 +41,10 @@ class OrderController extends AbstractController
     }
 
     #[Route('/new', name: 'app_order_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $em, OrderRepository $orderRepository): Response
+    public function new(Request $request, OrderRepository $orderRepository): Response
     {
-        $order = new Order();
-
-        $product = $em
-            ->getRepository(Product::class)
-            ->findOneBy(['id' => $request->query->get('product')]);
-
-        $order->setUserId($this->getUser());
-        $order->setProductId($product);
+        $order = $this->entityBuilder
+            ->buildOrder(user: $this->getUser(), productId: $request->query->get('product'));
 
         $form = $this->createForm(OrderType::class, $order);
 

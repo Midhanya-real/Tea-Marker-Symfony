@@ -2,18 +2,16 @@
 
 namespace App\Controller;
 
+use App\Actions\PaymentActions\PaymentsResponseStatuses;
 use App\config\Enums\OrderStatus;
-use App\Entity\Order;
 use App\Entity\Payment;
 use App\Repository\PaymentRepository;
-use App\Services\PaymentService\PaymentProcess\CreatePaymentProcess;
+use App\Services\EntityBuilderService\EntityBuilderService;
 use App\Services\PaymentService\PaymentProcess\RefundPaymentProcess;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Uid\Uuid;
 use YooKassa\Common\Exceptions\ApiConnectionException;
 use YooKassa\Common\Exceptions\ApiException;
 use YooKassa\Common\Exceptions\AuthorizeException;
@@ -30,45 +28,21 @@ use YooKassa\Common\Exceptions\UnauthorizedException;
 class PaymentController extends AbstractController
 {
     public function __construct(
-        private readonly CreatePaymentProcess $createPaymentProcess,
+        private readonly EntityBuilderService $entityBuilder,
         private readonly RefundPaymentProcess $refundPaymentProcess,
     )
     {
     }
 
-    /**
-     * @throws NotFoundException
-     * @throws ApiException
-     * @throws ResponseProcessingException
-     * @throws BadApiRequestException
-     * @throws ExtensionNotFoundException
-     * @throws AuthorizeException
-     * @throws InternalServerError
-     * @throws ForbiddenException
-     * @throws TooManyRequestsException
-     * @throws UnauthorizedException
-     * @throws ApiConnectionException
-     */
     #[Route('/new', name: 'app_payment_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $em, PaymentRepository $paymentRepository): Response
+    public function new(Request $request, PaymentRepository $paymentRepository): Response
     {
-        $order = $em
-            ->getRepository(Order::class)
-            ->findOneBy(['id' => $request->query->get('order')]);
+        $payment = $this->entityBuilder
+            ->buildPayment(orderId: $request->query->get('order'), status: OrderStatus::Pending);
 
-        $createResponse = $this->createPaymentProcess->execute($order);
+        $paymentRepository->save($payment['payment'], true);
 
-        $payment = new Payment();
-
-        $payment->setPrice($createResponse->amount->value);
-        $payment->setYookassaId(Uuid::fromString($createResponse->getId()));
-        $payment->setUserId($order->getUserId());
-        $payment->setOrderId($order);
-        $payment->setStatus(OrderStatus::Pending);
-
-        $paymentRepository->save($payment, true);
-
-        return $this->redirect($createResponse->getConfirmation()->getConfirmationUrl());
+        return $this->redirect($payment['redirect_url']);
     }
 
     /**
@@ -89,7 +63,7 @@ class PaymentController extends AbstractController
     {
         $refund = $this->refundPaymentProcess->execute($payment);
 
-        if ($refund->getStatus() === 'succeeded') {
+        if (PaymentsResponseStatuses::isSuccess($refund->getStatus())) {
             $payment->setStatus(OrderStatus::Refunded);
             $paymentRepository->save($payment, true);
         }
