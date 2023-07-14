@@ -42,7 +42,7 @@ class PaymentController extends AbstractController
 
         $paymentRepository->save($payment['payment'], true);
 
-        return $this->redirect($payment['redirect_url']);
+        return $this->redirect($payment['redirect_url'], Response::HTTP_SEE_OTHER);
     }
 
     /**
