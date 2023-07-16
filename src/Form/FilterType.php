@@ -9,6 +9,8 @@ use App\Entity\Type;
 use App\Services\ProductFilterService\Entity\Filter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,19 +21,24 @@ class FilterType extends AbstractType
         $builder
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
-                'multiple' => true
+                'multiple' => true,
+                'required' => false,
+                ''
             ])
             ->add('brands', EntityType::class, [
                 'class' => Brand::class,
-                'multiple' => true
+                'multiple' => true,
+                'required' => false
             ])
             ->add('types', EntityType::class, [
                 'class' => Type::class,
-                'multiple' => true
+                'multiple' => true,
+                'required' => false
             ])
             ->add('countries', EntityType::class, [
                 'class' => Country::class,
-                'multiple' => true
+                'multiple' => true,
+                'required' => false
             ]);
 //            ->add('prices', EntityType::class, [
 //                'class' => ,

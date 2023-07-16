@@ -41,44 +41,44 @@ class FilterService
         return $this;
     }
 
-    public function getCategory(string $alias): static
+    public function getCategory(string $alias, array $parameters): static
     {
-        $this->categoryFilter->handle($this->filters, $this->queryBuilder, $alias);
+        $this->categoryFilter->handle($this->filters, $this->queryBuilder, $alias, $parameters);
 
         return $this;
     }
 
-    public function getBrand(string $alias): static
+    public function getBrand(string $alias, array $parameters): static
     {
-        $this->brandFilter->handle($this->filters, $this->queryBuilder, $alias);
+        $this->brandFilter->handle($this->filters, $this->queryBuilder, $alias, $parameters);
 
         return $this;
     }
 
-    public function getCountry(string $alias): static
+    public function getCountry(string $alias, array $parameters): static
     {
-        $this->countryFilter->handle($this->filters, $this->queryBuilder, $alias);
+        $this->countryFilter->handle($this->filters, $this->queryBuilder, $alias, $parameters);
 
         return $this;
     }
 
-    public function getPrice(string $alias): static
+    public function getPrice(string $alias, array $parameters): static
     {
-        $this->priceFilter->handle($this->filters, $this->queryBuilder, $alias);
+        $this->priceFilter->handle($this->filters, $this->queryBuilder, $alias, $parameters);
 
         return $this;
     }
 
-    public function getType(string $alias): static
+    public function getType(string $alias, array $parameters): static
     {
-        $this->typeFilter->handle($this->filters, $this->queryBuilder, $alias);
+        $this->typeFilter->handle($this->filters, $this->queryBuilder, $alias, $parameters);
 
         return $this;
     }
 
-    public function getWeight(string $alias): static
+    public function getWeight(string $alias, array $parameters): static
     {
-        $this->weightFilter->handle($this->filters, $this->queryBuilder, $alias);
+        $this->weightFilter->handle($this->filters, $this->queryBuilder, $alias, $parameters);
 
         return $this;
     }
