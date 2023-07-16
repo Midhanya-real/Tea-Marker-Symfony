@@ -21,7 +21,7 @@ class ProductController extends AbstractController
     {
     }
 
-    #[Route('/', name: 'app_product_index', methods: ['GET'])]
+    #[Route('/', name: 'app_product_index', methods: ['GET', 'POST'])]
     public function index(Request $request, ProductRepository $productRepository): Response
     {
         $filter = new Filter();

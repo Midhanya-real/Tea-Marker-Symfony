@@ -56,6 +56,12 @@ class ProductRepository extends ServiceEntityRepository
             ->getFilters();
 
         return $filterQuery
+            ->setParameters([
+                'categories' => $filter->getCategories(),
+                'brands' => $filter->getBrands(),
+                'types' => $filter->getTypes(),
+                'countries' => $filter->getCountries(),
+            ])
             ->getQuery()
             ->getResult();
     }
