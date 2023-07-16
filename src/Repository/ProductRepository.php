@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Services\ProductFilterService\Entity\Filter;
+use App\Services\ProductFilterService\FilterService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +39,25 @@ class ProductRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findByFilters(Filter $filter, FilterService $filterService): array
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+
+        $filterQuery = $filterService->setQueryBuilder($queryBuilder)
+            ->setFilter($filter)
+            ->getCategory('p.category IN (:categories)')
+            ->getBrand('p.brand IN (:brands)')
+            ->getType('p.type IN (:types)')
+            ->getCountry('p.country IN (:countries)')
+            ->getWeight('p.weight IN (:weights)')
+            ->getPrice('p.price = IN (:prices)')
+            ->getFilters();
+
+        return $filterQuery
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**
