@@ -6,6 +6,8 @@ use App\Entity\Product;
 use App\Services\ProductFilterService\Entity\Filter;
 use App\Services\ProductFilterService\FilterService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,6 +41,30 @@ class ProductRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function findByBordersPrice(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('MIN(p.price) as min_price, MAX(p.price) as max_price')
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function findByBordersWeight(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('MIN(p.weight) as min_weight, MAX(p.weight) as max_weight')
+            ->getQuery()
+            ->getSingleResult();
     }
 
     public function findByFilters(Filter $filter, FilterService $filterService): array

@@ -25,6 +25,15 @@ class ProductController extends AbstractController
     public function index(Request $request, ProductRepository $productRepository): Response
     {
         $filter = new Filter();
+
+        $priceBorders = $productRepository->findByBordersPrice();
+        $weightBorders = $productRepository->findByBordersWeight();
+
+        $filter->setMinPrice($priceBorders['min_price']);
+        $filter->setMaxPrice($priceBorders['max_price']);
+        $filter->setMinWeight($weightBorders['min_weight']);
+        $filter->setMaxWeight($weightBorders['max_weight']);
+
         $form = $this->createForm(FilterType::class, $filter);
         $form->handleRequest($request);
 
