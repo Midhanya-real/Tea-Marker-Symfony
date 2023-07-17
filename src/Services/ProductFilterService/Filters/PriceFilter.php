@@ -10,10 +10,10 @@ class PriceFilter
 {
     public function handle(Filter $filters, QueryBuilder $builder, string $alias, array $parameters): QueryBuilder
     {
-        return $filters->getMinPrice()
+        return $filters->getMinPrice() || $filters->getMaxPrice()
             ? $builder->andWhere($alias)
-                ->setParameter(FilterParameters::Min->value, $parameters['min'])
-                ->setParameter(FilterParameters::Max->value, $parameters['max'])
+                ->setParameter(FilterParameters::MinPrice->value, $parameters['min'])
+                ->setParameter(FilterParameters::MaxPrice->value, $parameters['max'])
             : $builder;
     }
 }

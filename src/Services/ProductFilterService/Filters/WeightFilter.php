@@ -10,9 +10,10 @@ class WeightFilter
 {
     public function handle(Filter $filters, QueryBuilder $builder, string $alias, array $parameters): QueryBuilder
     {
-        return $filters->getWeights()
+        return $filters->getMinWeight() || $filters->getMaxWeight()
             ? $builder->andWhere($alias)
-                ->setParameter(FilterParameters::Weights->value, $parameters)
+                ->setParameter(FilterParameters::MinWeight->value, $parameters['min'])
+                ->setParameter(FilterParameters::MaxWeight->value, $parameters['max'])
             : $builder;
     }
 }

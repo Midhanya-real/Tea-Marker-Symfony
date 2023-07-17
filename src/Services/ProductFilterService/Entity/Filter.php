@@ -10,7 +10,8 @@ class Filter
 
     private array $types = [];
 
-    private array $weights = [];
+    private ?string $minWeight = null;
+    private ?string $maxWeight = null;
 
     private ?string $minPrice = null;
 
@@ -54,14 +55,26 @@ class Filter
         return $this;
     }
 
-    public function getWeights(): array
+    public function getMinWeight(): string
     {
-        return $this->weights;
+        return $this->minWeight;
     }
 
-    public function setWeights(array $weights): static
+    public function setMinWeight(string $weight): static
     {
-        $this->weights = $weights;
+        $this->minWeight = $weight;
+
+        return $this;
+    }
+
+    public function getMaxWeight(): string
+    {
+        return $this->maxWeight;
+    }
+
+    public function setMaxWeight(string $weight): static
+    {
+        $this->maxWeight = $weight;
 
         return $this;
     }

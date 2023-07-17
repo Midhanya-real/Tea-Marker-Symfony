@@ -8,7 +8,8 @@ enum FilterParameters: string
     case Brands = 'brands';
     case Types = 'types';
     case Countries = 'countries';
-    case Weights = 'weights';
-    case Min = 'minPrice';
-    case Max = 'maxPrice';
+    case MinWeight = 'minWeight';
+    case MaxWeight = 'maxWeight';
+    case MinPrice = 'minPrice';
+    case MaxPrice = 'maxPrice';
 }

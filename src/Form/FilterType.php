@@ -9,6 +9,7 @@ use App\Entity\Type;
 use App\Services\ProductFilterService\Entity\Filter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -42,11 +43,22 @@ class FilterType extends AbstractType
                 'expanded' => true,
                 'required' => false
             ])
-            ->add('minPrice', TextType::class, [
-                'label' => 'min'
+            ->add('minPrice', NumberType::class, [
+                'label' => 'minimum price',
+                'required' => false
+
             ])
-            ->add('maxPrice', TextType::class, [
-                'label' => 'max'
+            ->add('maxPrice', NumberType::class, [
+                'label' => 'maximum price',
+                'required' => false
+            ])
+            ->add('minWeight', NumberType::class, [
+                'label' => 'minimum weight',
+                'required' => false
+            ])
+            ->add('maxWeight', NumberType::class, [
+                'label' => 'maximum weight',
+                'required' => false
             ]);
     }
 
