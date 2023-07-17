@@ -52,7 +52,10 @@ class ProductRepository extends ServiceEntityRepository
             ->getType('p.type IN (:types)', $filter->getTypes())
             ->getCountry('p.country IN (:countries)', $filter->getCountries())
             ->getWeight('p.weight IN (:weights)', $filter->getWeights())
-            ->getPrice('p.price = IN (:prices)', $filter->getPrices())
+            ->getPrice('p.price BETWEEN :minPrice AND :maxPrice', [
+                'min' => $filter->getMinPrice(),
+                'max' => $filter->getMaxPrice()
+            ])
             ->getFilters();
 
         return $filterQuery

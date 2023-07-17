@@ -9,5 +9,6 @@ enum FilterParameters: string
     case Types = 'types';
     case Countries = 'countries';
     case Weights = 'weights';
-    case Prices = 'prices';
+    case Min = 'minPrice';
+    case Max = 'maxPrice';
 }

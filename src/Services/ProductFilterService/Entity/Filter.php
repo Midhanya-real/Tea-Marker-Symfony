@@ -12,7 +12,9 @@ class Filter
 
     private array $weights = [];
 
-    private array $prices = [];
+    private ?string $minPrice = null;
+
+    private ?string $maxPrice = null;
 
     private array $countries = [];
 
@@ -64,14 +66,26 @@ class Filter
         return $this;
     }
 
-    public function getPrices(): array
+    public function getMinPrice(): string
     {
-        return $this->prices;
+        return $this->minPrice;
     }
 
-    public function setPrices(array $prices): static
+    public function getMaxPrice(): string
     {
-        $this->prices = $prices;
+        return $this->maxPrice;
+    }
+
+    public function setMinPrice(string $price): static
+    {
+        $this->minPrice = $price;
+
+        return $this;
+    }
+
+    public function setMaxPrice(string $price): static
+    {
+        $this->maxPrice = $price;
 
         return $this;
     }

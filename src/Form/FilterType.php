@@ -9,9 +9,7 @@ use App\Entity\Type;
 use App\Services\ProductFilterService\Entity\Filter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\RangeType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -43,15 +41,13 @@ class FilterType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'required' => false
+            ])
+            ->add('minPrice', TextType::class, [
+                'label' => 'min'
+            ])
+            ->add('maxPrice', TextType::class, [
+                'label' => 'max'
             ]);
-//            ->add('prices', EntityType::class, [
-//                'class' => ,
-//                'multiple' => true
-//            ])
-//            ->add('weights', EntityType::class, [
-//                'class' => '',
-//                'multiple' => true
-//            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
