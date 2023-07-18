@@ -63,7 +63,7 @@ class PaymentController extends AbstractController
     {
         $refund = $this->refundPaymentProcess->execute($payment);
 
-        if (PaymentsResponseStatuses::isSuccess($refund->getStatus())) {
+        if ($refund->getStatus() === OrderStatus::Succeeded->value) {
             $payment->setStatus(OrderStatus::Refunded);
             $paymentRepository->save($payment, true);
         }
