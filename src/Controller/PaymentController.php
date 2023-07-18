@@ -37,12 +37,19 @@ class PaymentController extends AbstractController
     #[Route('/new', name: 'app_payment_new', methods: ['GET', 'POST'])]
     public function new(Request $request, PaymentRepository $paymentRepository): Response
     {
-        $payment = $this->entityBuilder
+        $yookassaPayment = $this->entityBuilder
             ->buildPayment(orderId: $request->query->get('order'), status: OrderStatus::Pending);
 
-        $paymentRepository->save($payment['payment'], true);
+        $payment = $paymentRepository->getByOrder($yookassaPayment['payment']->getOrderId());
 
-        return $this->redirect($payment['redirect_url'], Response::HTTP_SEE_OTHER);
+        if (!$payment) {
+            $paymentRepository->save($yookassaPayment['payment'], true);
+        } else {
+            $payment->setYookassaId($yookassaPayment['payment']->getYookassaId());
+            $paymentRepository->save($payment, true);
+        }
+
+        return $this->redirect($yookassaPayment['redirect_url'], Response::HTTP_SEE_OTHER);
     }
 
     /**

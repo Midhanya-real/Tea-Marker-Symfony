@@ -31,7 +31,7 @@ class PaymentBuilder
         return $this->createPaymentProcess->execute($order);
     }
 
-    private function getPayment(CreatePaymentResponse $paymentResponse, Order $order, OrderStatus $status): Payment
+    private function getEntity(CreatePaymentResponse $paymentResponse, Order $order, OrderStatus $status): Payment
     {
         $payment = new Payment();
 
@@ -48,7 +48,7 @@ class PaymentBuilder
     {
         $order = $this->getOrder($orderId);
         $paymentResponse = $this->getCreatePaymentResponse($order);
-        $payment = $this->getPayment(paymentResponse: $paymentResponse, order: $order, status: $status);
+        $payment = $this->getEntity(paymentResponse: $paymentResponse, order: $order, status: $status);
 
         return [
             'payment' => $payment,

@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Form\FilterType;
 use App\Repository\ProductRepository;
-use App\Services\ProductFilterService\Entity\Filter;
+use App\Services\EntityBuilderService\EntityBuilderService;
 use App\Services\ProductFilterService\FilterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +17,7 @@ class ProductController extends AbstractController
 {
     public function __construct(
         private readonly FilterService $filterService,
+        private EntityBuilderService   $entityBuilderService,
     )
     {
     }
@@ -24,28 +25,13 @@ class ProductController extends AbstractController
     #[Route('/', name: 'app_product_index', methods: ['GET', 'POST'])]
     public function index(Request $request, ProductRepository $productRepository): Response
     {
-        $filter = new Filter();
-
-        $priceBorders = $productRepository->findByBordersPrice();
-        $weightBorders = $productRepository->findByBordersWeight();
-
-        $filter->setMinPrice($priceBorders['min_price']);
-        $filter->setMaxPrice($priceBorders['max_price']);
-        $filter->setMinWeight($weightBorders['min_weight']);
-        $filter->setMaxWeight($weightBorders['max_weight']);
+        $filter = $this->entityBuilderService->buildFilter($productRepository);
 
         $form = $this->createForm(FilterType::class, $filter);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            return $this->render('product/index.html.twig', [
-                'products' => $productRepository->findByFilters($filter, $this->filterService),
-                'form' => $form,
-            ]);
-        }
-
         return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $productRepository->findByFilters($filter, $this->filterService),
             'form' => $form,
         ]);
     }
