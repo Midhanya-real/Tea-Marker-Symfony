@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\config\Enums\OrderStatus;
+use App\Entity\Order;
 use App\Entity\Payment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -47,6 +48,15 @@ class PaymentRepository extends ServiceEntityRepository
             ->setParameter('statuses', OrderStatus::getCurrentStatuses())
             ->getQuery()
             ->getResult();
+    }
+
+    public function getByOrder(Order $order): ?Payment
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.order_id =:order')
+            ->setParameter('order', $order->getId())
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 //    /**
