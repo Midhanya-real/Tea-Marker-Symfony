@@ -26,7 +26,7 @@
                 {% else %}
                     <td>{{ order.payment.status.value }}</td>
                     <td>
-                        {% if order.payment.status.value != "refunded" %}
+                        {% if order.payment.status.value != "refunded" and  order.payment.status.value != "canceled"%}
                             <a href="{{ path('app_payment_edit', {'id': order.payment.id}) }}">refund</a>
                         {% endif %}
                     </td>

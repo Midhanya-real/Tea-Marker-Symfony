@@ -17,6 +17,7 @@ use YooKassa\Common\Exceptions\ResponseProcessingException;
 use YooKassa\Common\Exceptions\TooManyRequestsException;
 use YooKassa\Common\Exceptions\UnauthorizedException;
 use YooKassa\Model\CurrencyCode;
+use YooKassa\Model\Payment\PaymentInterface;
 use YooKassa\Request\Payments\CancelResponse;
 use YooKassa\Request\Payments\CreateCaptureResponse;
 use YooKassa\Request\Payments\CreatePaymentResponse;
@@ -30,6 +31,23 @@ class PaymentService
         private readonly string         $redirectURL,
     )
     {
+    }
+
+
+    /**
+     * @throws NotFoundException
+     * @throws ApiException
+     * @throws ResponseProcessingException
+     * @throws BadApiRequestException
+     * @throws ExtensionNotFoundException
+     * @throws InternalServerError
+     * @throws ForbiddenException
+     * @throws TooManyRequestsException
+     * @throws UnauthorizedException
+     */
+    public function getInfo(string $uuid): ?PaymentInterface
+    {
+        return $this->api->getPaymentInfo($uuid);
     }
 
     /**
