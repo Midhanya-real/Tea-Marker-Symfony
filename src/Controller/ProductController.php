@@ -16,8 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     public function __construct(
-        private readonly FilterService $filterService,
-        private EntityBuilderService   $entityBuilderService,
+        private readonly FilterService        $filterService,
+        private readonly EntityBuilderService $entityBuilderService,
     )
     {
     }
