@@ -3,7 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Services\ProductFilterService\Entity\Filter;
+use App\Services\ProductFilterService\FilterService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +43,52 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Product[] Returns an array of Product objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function findByBordersPrice(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('MIN(p.price) as min_price, MAX(p.price) as max_price')
+            ->getQuery()
+            ->getSingleResult();
+    }
 
-//    public function findOneBySomeField($value): ?Product
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function findByBordersWeight(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('MIN(p.weight) as min_weight, MAX(p.weight) as max_weight')
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+    public function findByFilters(Filter $filter, FilterService $filterService): array
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+
+        $filterQuery = $filterService->setQueryBuilder($queryBuilder)
+            ->setFilter($filter)
+            ->getCategory('p.category IN (:categories)', $filter->getCategories())
+            ->getBrand('p.brand IN (:brands)', $filter->getBrands())
+            ->getType('p.type IN (:types)', $filter->getTypes())
+            ->getCountry('p.country IN (:countries)', $filter->getCountries())
+            ->getWeight('p.weight BETWEEN :minWeight AND :maxWeight', [
+                'min' => $filter->getMinWeight(),
+                'max' => $filter->getMaxWeight()
+            ])
+            ->getPrice('p.price BETWEEN :minPrice AND :maxPrice', [
+                'min' => $filter->getMinPrice(),
+                'max' => $filter->getMaxPrice()
+            ])
+            ->getFilters();
+
+        return $filterQuery
+            ->getQuery()
+            ->getResult();
+    }
 }

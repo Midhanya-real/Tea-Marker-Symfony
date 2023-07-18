@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\config\Enums\OrderStatus;
 use App\Entity\Payment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,6 +38,15 @@ class PaymentRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getIndefinitePayments(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.status IN (:statuses)')
+            ->setParameter('statuses', OrderStatus::getCurrentStatuses())
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**
