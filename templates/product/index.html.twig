@@ -3,32 +3,17 @@
 {% block title %}Products{% endblock %}
 
 {% block body %}
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Product</th>
-            <th>Weight</th>
-            <th>Price</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div class="record-content">
         {% for product in products %}
-            <tr>
-                <td><a href="{{ path('app_product_show', {id: product.id}) }}">{{ product.name }}</a></td>
-                <td>{{ product.weight }}</td>
-                <td>{{ product.price }}</td>
-                <td>
-                    <a href="{{ path('app_product_setformfororder', {name: product.name}) }}">Buy</a>
-                </td>
-            </tr>
+            <div class="record">
+                <p><a href="{{ path('app_product_show', {id: product.id}) }}">{{ product.name }}</a></p>
+                <p>Weight: {{ product.weight }}</p>
+                <p>Price: {{ product.price }}</p>
+                <p><a href="{{ path('app_product_setformfororder', {name: product.name}) }}">Buy</a></p>
+            </div>
         {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
+            <p>no records found</p>
         {% endfor %}
-        </tbody>
-    </table>
-
+    </div>
     {{ include('product/_filter_form.html.twig', {'button_label': 'Search'}) }}
 {% endblock %}
