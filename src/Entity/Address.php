@@ -34,7 +34,7 @@ class Address
     #[Assert\Positive()]
     private ?int $apartment = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
+    #[ORM\Column(type: Types::INTEGER)]
     #[Assert\NotBlank()]
     #[Assert\Length(min: 6)]
     private ?int $post_code = null;
