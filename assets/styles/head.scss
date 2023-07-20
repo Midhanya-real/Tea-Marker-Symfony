@@ -4,19 +4,24 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
+
   ul {
     text-align: center;
     list-style-type: none;
     margin: 0;
     padding: 15px;
+
     li {
       display: inline;
       font-family: "Fira Sans", sans-serif;
       font-size: 17px;
+
       a {
         color: #f2f2f2;
         text-decoration: none;
         padding: 14px;
+        border-radius: 15px;
+
         &:hover {
           background-color: #111;
         }

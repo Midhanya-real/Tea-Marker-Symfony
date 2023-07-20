@@ -5,9 +5,9 @@
 {% block body %}
     <h2>Addresses</h2>
 
-    <div class="record-content">
+    <div class="content">
         {% for address in addresses %}
-            <div class="record">
+            <div id="record">
                 <p>
                     Country:
                     {{ address.country }}
@@ -28,12 +28,16 @@
                     Post code:
                     {{ address.postCode }}
                 </p>
-                <a href="{{ path('app_address_show', {'id': address.id}) }}">show</a>
-                <a href="{{ path('app_address_edit', {'id': address.id}) }}">edit</a>
+                <p>
+                    <a href="{{ path('app_address_show', {'id': address.id}) }}">show</a>
+                    <a href="{{ path('app_address_edit', {'id': address.id}) }}">edit</a>
+                </p>
             </div>
         {% endfor %}
 
-        <a href="{{ path('app_address_new') }}">Create new</a>
+        <div class="content">
+            <p><a href="{{ path('app_address_new') }}">Create new</a></p>
+        </div>
 
     </div>
 {% endblock %}
