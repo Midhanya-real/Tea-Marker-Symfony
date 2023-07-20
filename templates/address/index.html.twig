@@ -3,39 +3,41 @@
 {% block title %}Addresses{% endblock %}
 
 {% block body %}
-    <h1>Addresses</h1>
+    <h2>Addresses</h2>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Country</th>
-                <th>City</th>
-                <th>House</th>
-                <th>Apartment</th>
-                <th>Post_code</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="content">
         {% for address in addresses %}
-            <tr>
-                <td>{{ address.country }}</td>
-                <td>{{ address.city }}</td>
-                <td>{{ address.house }}</td>
-                <td>{{ address.apartment }}</td>
-                <td>{{ address.postCode }}</td>
-                <td>
+            <div id="record">
+                <p>
+                    Country:
+                    {{ address.country }}
+                </p>
+                <p>
+                    City:
+                    {{ address.city }}
+                </p>
+                <p>
+                    House:
+                    {{ address.house }}
+                </p>
+                <p>
+                    Apartment:
+                    {{ address.apartment }}
+                </p>
+                <p>
+                    Post code:
+                    {{ address.postCode }}
+                </p>
+                <p>
                     <a href="{{ path('app_address_show', {'id': address.id}) }}">show</a>
                     <a href="{{ path('app_address_edit', {'id': address.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
+                </p>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_address_new') }}">Create new</a>
+        <div class="content">
+            <p><a href="{{ path('app_address_new') }}">Create new</a></p>
+        </div>
+
+    </div>
 {% endblock %}

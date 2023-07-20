@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Order{% endblock %}
+{% block title %}{{ order.productId }}{% endblock %}
 
 {% block body %}
     <h1>Order</h1>
@@ -9,7 +9,7 @@
         <tbody>
         <tr>
             <th>Product</th>
-            <td>{{ order.product }}</td>
+            <td>{{ order.productId }}</td>
         </tr>
         <tr>
             <th>Count</th>

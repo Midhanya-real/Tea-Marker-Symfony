@@ -4,39 +4,31 @@
 
 {% block body %}
     <h1>Orders</h1>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Product</th>
-            <th>Count</th>
-            <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div class="content">
         {% for order in orders %}
-            <tr>
-                <td>{{ order.productId }}</td>
-                <td>{{ order.count }}</td>
-                {% if order.payment is null %}
-                    <td>no paid</td>
-                    <td>
+            <div id="record">
+                <p>
+                    {{ order.productId }}
+                </p>
+                <p>
+                    Count:
+                    {{ order.count }}
+                </p>
+                <p>
+                    Status:
+                    {% if order.payment is null %}
+                        no paid
                         <a href="{{ path('app_order_paymentredirect', {'id': order.id}) }}">pay</a>
-                    </td>
-                {% else %}
-                    <td>{{ order.payment.status.value }}</td>
-                    <td>
-                        {% if order.payment.status.value != "refunded" and  order.payment.status.value != "canceled"%}
-                            <a href="{{ path('app_payment_edit', {'id': order.payment.id}) }}">refund</a>
-                        {% endif %}
-                    </td>
-                {% endif %}
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
+                    {% else %}
+                        {{ order.payment.status.value }}
+                    {% endif %}
+                </p>
+                <p>
+                    {% if order.payment.status.value != "refunded" and  order.payment.status.value != "canceled" %}
+                        <a href="{{ path('app_payment_edit', {'id': order.payment.id}) }}">refund</a>
+                    {% endif %}
+                </p>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 {% endblock %}

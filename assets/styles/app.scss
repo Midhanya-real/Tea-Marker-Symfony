@@ -1,0 +1,27 @@
+@import '~bootstrap/scss/bootstrap';
+
+@import "head";
+@import "body";
+
+body {
+  background-color: #1e1e1e;
+}
+
+p {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-left: 7px;
+  color: #f2f2f2;
+
+  a {
+    color: #f2f2f2;
+    text-decoration: none;
+    border-radius: 15px;
+    padding: 4px;
+    background-color: #111;
+
+    &:hover {
+      background-color: #555655;
+    }
+  }
+}
