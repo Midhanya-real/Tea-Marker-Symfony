@@ -6,38 +6,10 @@
     <h2>Addresses</h2>
 
     <div class="content">
-        {% for address in addresses %}
-            <div id="record">
-                <p>
-                    Country:
-                    {{ address.country }}
-                </p>
-                <p>
-                    City:
-                    {{ address.city }}
-                </p>
-                <p>
-                    House:
-                    {{ address.house }}
-                </p>
-                <p>
-                    Apartment:
-                    {{ address.apartment }}
-                </p>
-                <p>
-                    Post code:
-                    {{ address.postCode }}
-                </p>
-                <p>
-                    <a href="{{ path('app_address_show', {'id': address.id}) }}">show</a>
-                    <a href="{{ path('app_address_edit', {'id': address.id}) }}">edit</a>
-                </p>
-            </div>
-        {% endfor %}
+        {{ include('Components/IndexComponents/all-addresses.html.twig') }}
 
-        <div class="content">
-            <p><a href="{{ path('app_address_new') }}">Create new</a></p>
-        </div>
-
+        <p id="new-record">
+            <a href="{{ path('app_address_new') }}">Create new</a>
+        </p>
     </div>
 {% endblock %}

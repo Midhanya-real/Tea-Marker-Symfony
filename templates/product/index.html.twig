@@ -8,15 +8,6 @@
     </div>
 
     <div class="content">
-        {% for product in products %}
-            <div id="record">
-                <p><a href="{{ path('app_product_show', {id: product.id}) }}">{{ product.name }}</a></p>
-                <p>Weight: {{ product.weight }}</p>
-                <p>Price: {{ product.price }}</p>
-                <p><a href="{{ path('app_product_setformfororder', {name: product.name}) }}">Buy</a></p>
-            </div>
-        {% else %}
-            <p>no records found</p>
-        {% endfor %}
+        {{ include('Components/IndexComponents/all-products.html.twig') }}
     </div>
 {% endblock %}

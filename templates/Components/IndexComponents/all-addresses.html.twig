@@ -1,0 +1,28 @@
+{% for address in addresses %}
+    <div id="record">
+        <p>
+            Country:
+            {{ address.country }}
+        </p>
+        <p>
+            City:
+            {{ address.city }}
+        </p>
+        <p>
+            House:
+            {{ address.house }}
+        </p>
+        <p>
+            Apartment:
+            {{ address.apartment }}
+        </p>
+        <p>
+            Post code:
+            {{ address.postCode }}
+        </p>
+        <p>
+            <a href="{{ path('app_address_show', {'id': address.id}) }}">show</a>
+            <a href="{{ path('app_address_edit', {'id': address.id}) }}">edit</a>
+        </p>
+    </div>
+{% endfor %}

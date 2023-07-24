@@ -40,18 +40,6 @@ class AddressController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_address_show', methods: ['GET'])]
-    public function show(Address $address): Response
-    {
-        if ($address->getUserId() !== $this->getUser()) {
-            return $this->redirectToRoute('app_address_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('address/show.html.twig', [
-            'address' => $address,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'app_address_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Address $address, AddressRepository $addressRepository): Response
     {

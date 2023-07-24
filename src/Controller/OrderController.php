@@ -30,17 +30,6 @@ class OrderController extends AbstractController
         ]);
     }
 
-    #[Route('show/{id}', name: 'app_order_show', methods: ['GET'])]
-    public function show(Order $order): Response
-    {
-        if ($order->getUserId() !== $this->getUser()) {
-            return $this->redirectToRoute('app_order_index', [], Response::HTTP_SEE_OTHER);
-        }
-        return $this->render('order/show.html.twig', [
-            'order' => $order,
-        ]);
-    }
-
     #[Route('/new', name: 'app_order_new', methods: ['GET', 'POST'])]
     public function new(Request $request, OrderRepository $orderRepository): Response
     {
