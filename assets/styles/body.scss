@@ -23,7 +23,7 @@ body {
     border-color: #111;
     min-width: 150px;
     height: fit-content;
-    margin: 15px;
+    margin: 10px;
     background-color: #333;
     justify-content: flex-start;
 
@@ -76,4 +76,8 @@ body {
       border-style: solid;
     }
   }
+}
+
+.table {
+  margin: 10px 10px 10px 10px
 }
