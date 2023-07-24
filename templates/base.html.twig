@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
@@ -15,7 +15,9 @@
 </head>
 <body>
 {% block header %}
-    {{ include('header.html.twig') }}
+    <div id="navigation-bar">
+        {{ include('Components/header.html.twig') }}
+    </div>
 {% endblock %}
 {% block body %}{% endblock %}
 </body>

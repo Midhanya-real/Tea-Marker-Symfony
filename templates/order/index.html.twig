@@ -5,30 +5,6 @@
 {% block body %}
     <h1>Orders</h1>
     <div class="content">
-        {% for order in orders %}
-            <div id="record">
-                <p>
-                    {{ order.productId }}
-                </p>
-                <p>
-                    Count:
-                    {{ order.count }}
-                </p>
-                <p>
-                    Status:
-                    {% if order.payment is null %}
-                        no paid
-                        <a href="{{ path('app_order_paymentredirect', {'id': order.id}) }}">pay</a>
-                    {% else %}
-                        {{ order.payment.status.value }}
-                    {% endif %}
-                </p>
-                <p>
-                    {% if order.payment.status.value != "refunded" and  order.payment.status.value != "canceled" %}
-                        <a href="{{ path('app_payment_edit', {'id': order.payment.id}) }}">refund</a>
-                    {% endif %}
-                </p>
-            </div>
-        {% endfor %}
+        {{ include('Components/IndexComponents/all-orders.html.twig') }}
     </div>
 {% endblock %}

@@ -9,14 +9,12 @@ body {
   width: auto;
   height: auto;
   min-width: 1300px;
-  max-width: 1300px;
+  max-width: 2500px;
   border-radius: 15px;
   background: #F9F5F5;
-  margin-top: 100px;
   display: inline-flex;
   justify-content: flex-start;
-  margin-left: 0.75rem;
-  margin-right: 0.75rem;
+  margin: 6.5em 4em 0.75em 4em;
   flex-wrap: wrap;
 
   #record {
@@ -24,8 +22,7 @@ body {
     border-radius: 15px;
     border-color: #111;
     min-width: 150px;
-    max-width: 150px;
-    max-height: 200px;
+    height: fit-content;
     margin: 15px;
     background-color: #333;
     justify-content: flex-start;
