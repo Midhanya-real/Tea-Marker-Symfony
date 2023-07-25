@@ -40,28 +40,24 @@
     {% endfor %}
 </div>
 <div class="row">
-    <div>
-        {{ form_label(form.minPrice) }}
+    <label id="main_label">Prices</label>
+    <div id="interval">
         {{ form_widget(form.minPrice) }}
         {{ form_errors(form.minPrice) }}
 
-        {{ form_label(form.maxPrice) }}
         {{ form_widget(form.maxPrice) }}
         {{ form_errors(form.maxPrice) }}
     </div>
 </div>
 <div class="row">
-    <div>
-        {{ form_label(form.minWeight) }}
+    <label id="main_label">Weights</label>
+    <div id="interval">
         {{ form_widget(form.minWeight) }}
         {{ form_errors(form.minWeight) }}
 
-        {{ form_label(form.maxWeight) }}
         {{ form_widget(form.maxWeight) }}
         {{ form_errors(form.maxWeight) }}
     </div>
 </div>
-<p id="new-record">>
-    <button class="btn">{{ button_label|default('filter') }}</button>
-</p>
+<button class="btn">{{ button_label|default('filter') }}</button>
 {{ form_end(form) }}

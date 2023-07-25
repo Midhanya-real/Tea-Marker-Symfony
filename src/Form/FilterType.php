@@ -23,8 +23,8 @@ class FilterType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'required' => false,
-                'attr' => [
-                    'class' => 'form-control'
+                'label_attr' => [
+                    'id' => 'main_label'
                 ]
             ])
             ->add('brands', EntityType::class, [
@@ -32,8 +32,8 @@ class FilterType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'required' => false,
-                'attr' => [
-                    'class' => 'form-control'
+                'label_attr' => [
+                    'id' => 'main_label'
                 ]
             ])
             ->add('types', EntityType::class, [
@@ -41,8 +41,8 @@ class FilterType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'required' => false,
-                'attr' => [
-                    'class' => 'form-control'
+                'label_attr' => [
+                    'id' => 'main_label'
                 ]
             ])
             ->add('countries', EntityType::class, [
@@ -50,8 +50,8 @@ class FilterType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'required' => false,
-                'attr' => [
-                    'class' => 'form-control'
+                'label_attr' => [
+                    'id' => 'main_label'
                 ]
             ])
             ->add('minPrice', NumberType::class, [
@@ -60,6 +60,9 @@ class FilterType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control'
+                ],
+                'label_attr' => [
+                    'id' => 'main_label'
                 ]
 
             ])
@@ -69,6 +72,9 @@ class FilterType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control'
+                ],
+                'label_attr' => [
+                    'id' => 'main_label'
                 ]
             ])
             ->add('minWeight', NumberType::class, [
@@ -77,6 +83,9 @@ class FilterType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control'
+                ],
+                'label_attr' => [
+                    'id' => 'main_label'
                 ]
             ])
             ->add('maxWeight', NumberType::class, [
@@ -85,6 +94,9 @@ class FilterType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control'
+                ],
+                'label_attr' => [
+                    'id' => 'main_label'
                 ]
             ]);
     }
