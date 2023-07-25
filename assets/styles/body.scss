@@ -69,7 +69,7 @@ body {
   border-color: black;
   border-radius: 15px;
   width: 500px;
-  height: 500px;
+  height: fit-content;
   margin-left: 42em;
 
   #input-form {
@@ -84,6 +84,7 @@ body {
       padding: 10px;
       background-color: #333;
       display: table-caption;
+      margin-bottom: 1em;
 
       h1 {
         color: white;
