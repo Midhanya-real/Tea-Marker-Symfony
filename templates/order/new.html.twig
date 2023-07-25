@@ -5,9 +5,10 @@
 {% block body %}
     <h1>Create new order</h1>
 
-    <div class="content">
-        {{ include('order/_form.html.twig') }}
-
+    <div class="form-content">
+        <div id="input-form">
+            {{ include('order/_form.html.twig') }}
+        </div>
         <p id="new-record">
             <a href="{{ path('app_order_index') }}">back to list</a>
         </p>

@@ -1,5 +1,66 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+<div class="row">
+    {{ form_label(form.categories) }}
+    {% for category in form.categories %}
+        <div class="form-check">
+            {{ form_widget(category) }}
+            {{ form_label(category) }}
+            {{ form_errors(category) }}
+        </div>
+    {% endfor %}
+</div>
+<div class="row">
+    {{ form_label(form.brands) }}
+    {% for brand in form.brands %}
+        <div class="form-check">
+            {{ form_widget(brand) }}
+            {{ form_label(brand) }}
+            {{ form_errors(brand) }}
+        </div>
+    {% endfor %}
+</div>
+<div class="row">
+    {{ form_label(form.types) }}
+    {% for type in form.types %}
+        <div class="form-check">
+            {{ form_widget(type) }}
+            {{ form_label(type) }}
+            {{ form_errors(type) }}
+        </div>
+    {% endfor %}
+</div>
+<div class="row">
+    {{ form_label(form.countries) }}
+    {% for country in form.countries %}
+        <div class="form-check">
+            {{ form_widget(country) }}
+            {{ form_label(country) }}
+            {{ form_errors(country) }}
+        </div>
+    {% endfor %}
+</div>
+<div class="row">
+    <div>
+        {{ form_label(form.minPrice) }}
+        {{ form_widget(form.minPrice) }}
+        {{ form_errors(form.minPrice) }}
+
+        {{ form_label(form.maxPrice) }}
+        {{ form_widget(form.maxPrice) }}
+        {{ form_errors(form.maxPrice) }}
+    </div>
+</div>
+<div class="row">
+    <div>
+        {{ form_label(form.minWeight) }}
+        {{ form_widget(form.minWeight) }}
+        {{ form_errors(form.minWeight) }}
+
+        {{ form_label(form.maxWeight) }}
+        {{ form_widget(form.maxWeight) }}
+        {{ form_errors(form.maxWeight) }}
+    </div>
+</div>
 <p id="new-record">>
     <button class="btn">{{ button_label|default('filter') }}</button>
 </p>

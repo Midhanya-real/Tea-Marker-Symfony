@@ -13,7 +13,11 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('count', NumberType::class);
+            ->add('count', NumberType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

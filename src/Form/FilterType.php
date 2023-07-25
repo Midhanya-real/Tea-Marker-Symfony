@@ -23,45 +23,69 @@ class FilterType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'required' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('brands', EntityType::class, [
                 'class' => Brand::class,
                 'multiple' => true,
                 'expanded' => true,
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('types', EntityType::class, [
                 'class' => Type::class,
                 'multiple' => true,
                 'expanded' => true,
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('countries', EntityType::class, [
                 'class' => Country::class,
                 'multiple' => true,
                 'expanded' => true,
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('minPrice', NumberType::class, [
                 'label' => 'minimum price',
                 'scale' => 2,
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
 
             ])
             ->add('maxPrice', NumberType::class, [
                 'label' => 'maximum price',
                 'scale' => 2,
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('minWeight', NumberType::class, [
                 'label' => 'minimum weight',
                 'scale' => 2,
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('maxWeight', NumberType::class, [
                 'label' => 'maximum weight',
                 'scale' => 2,
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ]);
     }
 
