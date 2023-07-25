@@ -5,14 +5,17 @@
 {% block body %}
     <h1>Edit {{ address.id }}</h1>
 
-    <div class="content">
-        <p id="new-record">
-            {{ include('address/_form.html.twig', {'button_label': 'Update'}) }}
-        </p>
+    <div class="form-content">
+        <div id="input-form">
+            <p id="new-record">
+                {{ include('address/_form.html.twig', {'button_label': 'Update'}) }}
+            </p>
+
+        </div>
+
         <p id="new-record">
             {{ include('address/_delete_form.html.twig') }}
         </p>
-
 
         <p id="new-record">
             <a href="{{ path('app_address_index') }}">back to list</a>

@@ -1,8 +1,8 @@
 <nav>
     <ul>
         <li><a href="{{ path('app_home') }}">Market</a></li>
+        <li><a href="{{ path('app_product_index') }}">Products</a></li>
         {% if is_granted('IS_AUTHENTICATED') %}
-            <li><a href="{{ path('app_product_index') }}">Products</a></li>
             <li><a href="{{ path('app_order_index') }}">Orders</a></li>
             <li><a href="{{ path('app_address_index') }}">Addresses</a></li>
             <li><a href="{{ path('app_logout') }}">Logout</a></li>

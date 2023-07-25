@@ -16,21 +16,34 @@ class AddressType extends AbstractType
     {
         $builder
             ->add('country', CountryType::class, [
-                'label' => 'Country'
+                'label' => 'Country',
+                'attr' => [
+                    'class' => 'form-control',
+                ]
             ])
             ->add('city', TextType::class, [
-                'label' => 'City'
+                'label' => 'City',
+                'attr' => [
+                    'class' => 'form-control',
+                ]
             ])
             ->add('house', NumberType::class, [
-                'label' => 'House'
+                'label' => 'House',
+                'attr' => [
+                    'class' => 'form-control',
+                ]
             ])
             ->add('apartment', NumberType::class, [
-                'label' => 'Apartment'
+                'label' => 'Apartment',
+                'attr' => [
+                    'class' => 'form-control',
+                ]
             ])
             ->add('post_code', NumberType::class, [
                 'label' => 'Postcode',
                 'attr' => [
-                    'min' => 6
+                    'min' => 6,
+                    'class' => 'form-control'
                 ]
             ])
         ;
