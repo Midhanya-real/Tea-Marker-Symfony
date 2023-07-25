@@ -7,7 +7,7 @@ body {
 
 .content {
   width: auto;
-  height: auto;
+  height: fit-content;
   min-width: 1300px;
   max-width: 2500px;
   border-radius: 15px;
@@ -62,14 +62,15 @@ body {
 }
 
 .form-content {
-  margin-top: 10em;
   background-color: white;
   border-style: solid;
   border-color: black;
   border-radius: 15px;
   width: 500px;
   height: fit-content;
+  margin-top: 10em;
   margin-left: 42em;
+  position: fixed;
 
   #input-form {
     margin-left: auto;
