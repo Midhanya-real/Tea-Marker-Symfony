@@ -14,9 +14,11 @@ enum OrderStatus: string
 
     case Refunded = 'refunded';
 
+    case NoPaid = 'no paid';
+
     public static function getCurrentStatuses(): array
     {
-        return [OrderStatus::Pending->value, OrderStatus::WFC->value];
+        return [OrderStatus::Pending->value, OrderStatus::WFC->value, OrderStatus::NoPaid->value];
     }
 
     public static function getStatus(string $value): OrderStatus
