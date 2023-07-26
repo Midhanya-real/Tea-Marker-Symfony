@@ -46,6 +46,8 @@ class PaymentController extends AbstractController
             $paymentRepository->save($yookassaPayment['payment'], true);
         } else {
             $payment->setYookassaId($yookassaPayment['payment']->getYookassaId());
+            $payment->setStatus($yookassaPayment['payment']->getStatus());
+
             $paymentRepository->save($payment, true);
         }
 
