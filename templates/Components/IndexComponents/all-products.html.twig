@@ -6,5 +6,7 @@
         <p><a href="{{ path('app_product_setformfororder', {name: product.name}) }}">Buy</a></p>
     </div>
 {% else %}
-    <p>no records found</p>
+    <div id="no-found-results">
+        no records found
+    </div>
 {% endfor %}

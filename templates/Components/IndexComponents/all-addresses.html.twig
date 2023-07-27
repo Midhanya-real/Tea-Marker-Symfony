@@ -24,4 +24,8 @@
             <a href="{{ path('app_address_edit', {'id': address.id}) }}">edit</a>
         </p>
     </div>
+{% else %}
+    <div id="no-found-results">
+        no records found
+    </div>
 {% endfor %}

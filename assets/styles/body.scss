@@ -46,6 +46,13 @@ body {
       }
     }
   }
+
+  #no-found-results {
+    display: block;
+    margin: auto;
+    padding-top: 10em;
+    padding-bottom: 10em;
+  }
 }
 
 .product-filters {
