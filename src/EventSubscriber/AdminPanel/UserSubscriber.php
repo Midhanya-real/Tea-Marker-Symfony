@@ -11,7 +11,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private UserPasswordHasherInterface $hasher
+        private readonly UserPasswordHasherInterface $hasher
     )
     {
     }
