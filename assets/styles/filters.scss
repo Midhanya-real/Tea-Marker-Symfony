@@ -1,0 +1,31 @@
+.product-filters {
+  width: fit-content;
+  height: fit-content;
+
+  border-radius: 15px;
+  border-style: solid;
+  background: #FFF;
+  margin-right: 80px;
+  margin-top: 100px;
+  margin-bottom: 5em;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  form {
+    background-color: #333333;
+    border-style: solid;
+    border-radius: 15px;
+    color: white;
+  }
+
+  #main_label {
+    text-align: center;
+  }
+
+  #interval {
+    display: inline-flex;
+    width: 95%;
+    padding-left: 1.5em;
+  }
+
+}
