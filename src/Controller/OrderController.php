@@ -52,10 +52,4 @@ class OrderController extends AbstractController
         ]);
 
     }
-
-    #[Route('{id}/paymentRedirect', name: 'app_order_paymentredirect', methods: ['GET', 'POST'])]
-    public function paymentRedirect(Order $order): RedirectResponse
-    {
-        return $this->redirectToRoute('app_payment_new', ['order' => $order->getId()], Response::HTTP_SEE_OTHER);
-    }
 }

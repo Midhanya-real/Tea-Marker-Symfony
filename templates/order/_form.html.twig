@@ -1,4 +1,6 @@
 {{ form_start(form) }}
+<label>Product: {{ order.productId.name }}</label>
+<label>Buyer: {{ order.userId.email }}</label>
     {{ form_widget(form) }}
 <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

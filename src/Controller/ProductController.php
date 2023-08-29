@@ -43,10 +43,4 @@ class ProductController extends AbstractController
             'product' => $product,
         ]);
     }
-
-    #[Route('/{name}/preOrder', name: 'app_product_setformfororder', methods: ['GET', 'POST'])]
-    public function setFormForOrder(Product $product): Response
-    {
-        return $this->redirectToRoute('app_order_new', ['product' => $product->getId()], Response::HTTP_SEE_OTHER);
-    }
 }

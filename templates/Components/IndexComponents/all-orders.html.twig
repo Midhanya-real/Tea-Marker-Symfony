@@ -24,7 +24,7 @@
                     <a href="{{ path('app_order_paymentredirect', {'id': order.id}) }}">pay</a>
                 {% endif %}
             {% else %}
-                <a href="{{ path('app_order_paymentredirect', {'id': order.id}) }}">pay</a>
+                <a href="{{ path('app_payment_new', {'order': order.id}) }}">pay</a>
             {% endif %}
         </p>
     </div>

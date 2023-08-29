@@ -9,7 +9,7 @@
         {{ include('Components/ShowComponents/product.html.twig') }}
 
         <p id="new-record">
-            <a href="{{ path('app_product_setformfororder', {name: product.name}) }}">Buy</a>
+            <a href="{{ path('app_order_new', {product: product.id}) }}">Buy</a>
         </p>
     </div>
 {% endblock %}
