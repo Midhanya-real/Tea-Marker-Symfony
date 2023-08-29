@@ -23,7 +23,7 @@ use YooKassa\Common\Exceptions\ResponseProcessingException;
 use YooKassa\Common\Exceptions\TooManyRequestsException;
 use YooKassa\Common\Exceptions\UnauthorizedException;
 
-#[Route('/payment')]
+#[Route('/payment', name: 'payment_')]
 class PaymentController extends AbstractController
 {
     public function __construct(
@@ -33,7 +33,7 @@ class PaymentController extends AbstractController
     {
     }
 
-    #[Route('/new', name: 'app_payment_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(Request $request, PaymentRepository $paymentRepository): Response
     {
         $yookassaPayment = $this->entityBuilder
@@ -66,7 +66,7 @@ class PaymentController extends AbstractController
      * @throws UnauthorizedException
      * @throws ApiConnectionException
      */
-    #[Route('/{id}/refund', name: 'app_payment_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/refund', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Payment $payment, PaymentRepository $paymentRepository): Response
     {
         $refund = $this->refundPaymentProcess->execute($payment);

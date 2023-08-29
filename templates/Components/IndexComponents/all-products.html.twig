@@ -1,9 +1,9 @@
 {% for product in products %}
     <div id="record">
-        <p><a href="{{ path('app_product_show', {name: product.name}) }}">{{ product.name }}</a></p>
+        <p><a href="{{ path('product_show', {name: product.name}) }}">{{ product.name }}</a></p>
         <p>Weight: {{ product.weight }}</p>
         <p>Price: {{ product.price }}</p>
-        <p><a href="{{ path('app_order_new', {product: product.id}) }}">Buy</a></p>
+        <p><a href="{{ path('order_new', {product: product.id}) }}">Buy</a></p>
     </div>
 {% else %}
     <div id="no-found-results">

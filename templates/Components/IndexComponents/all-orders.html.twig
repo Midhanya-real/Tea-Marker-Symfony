@@ -18,13 +18,13 @@
         <p>
             {% if order.payment is not null %}
                 {% if order.payment.status.value not in ["refunded", "canceled", "no paid"] %}
-                    <a href="{{ path('app_payment_edit', {'id': order.payment.id}) }}">refund</a>
+                    <a href="{{ path('payment_edit', {'id': order.payment.id}) }}">refund</a>
                 {% endif %}
                 {% if order.payment.status.value == "no paid" %}
-                    <a href="{{ path('app_order_paymentredirect', {'id': order.id}) }}">pay</a>
+                    <a href="{{ path('payment_new', {'order': order.id}) }}">pay</a>
                 {% endif %}
             {% else %}
-                <a href="{{ path('app_payment_new', {'order': order.id}) }}">pay</a>
+                <a href="{{ path('payment_new', {'order': order.id}) }}">pay</a>
             {% endif %}
         </p>
     </div>

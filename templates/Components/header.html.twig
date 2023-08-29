@@ -1,10 +1,10 @@
 <nav>
     <ul>
         <li><a href="{{ path('app_home') }}">Market</a></li>
-        <li><a href="{{ path('app_product_index') }}">Products</a></li>
+        <li><a href="{{ path('product_index') }}">Products</a></li>
         {% if is_granted('IS_AUTHENTICATED') %}
-            <li><a href="{{ path('app_order_index') }}">Orders</a></li>
-            <li><a href="{{ path('app_address_index') }}">Addresses</a></li>
+            <li><a href="{{ path('order_index') }}">Orders</a></li>
+            <li><a href="{{ path('address_index') }}">Addresses</a></li>
             <li><a href="{{ path('app_logout') }}">Logout</a></li>
         {% else %}
             <li><a href="{{ path('app_login') }}">Login</a></li>

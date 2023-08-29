@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/product')]
+#[Route('/product', name: 'product_')]
 class ProductController extends AbstractController
 {
     public function __construct(
@@ -22,7 +22,7 @@ class ProductController extends AbstractController
     {
     }
 
-    #[Route('/', name: 'app_product_index', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'index', methods: ['GET', 'POST'])]
     public function index(Request $request, ProductRepository $productRepository): Response
     {
         $filter = $this->entityBuilderService->buildFilter($productRepository);
@@ -36,7 +36,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{name}')]
+    #[Route('/{name}', name: 'show')]
     public function show(Product $product): Response
     {
         return $this->render('product/show.html.twig', [

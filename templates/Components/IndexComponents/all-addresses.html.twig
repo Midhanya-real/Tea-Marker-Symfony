@@ -21,7 +21,7 @@
             {{ address.postCode }}
         </p>
         <p id="new-record">
-            <a href="{{ path('app_address_edit', {'id': address.id}) }}">edit</a>
+            <a href="{{ path('address_edit', {'id': address.id}) }}">edit</a>
         </p>
     </div>
 {% else %}
